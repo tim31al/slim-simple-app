@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f9aaed16-baed-4a70-9a1c-52d6395126d4" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpServers">
+    <servers>
+      <server host="slim" id="90c401a2-cf0e-4fa2-a4a8-55184cd21ad9" name="slim" />
+    </servers>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="Ubuntu 20.04">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/nikic/fast-route" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-server-handler" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/slim/slim" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-server-middleware" />
+      <path value="$PROJECT_DIR$/vendor/slim/psr7" />
+      <path value="$PROJECT_DIR$/vendor/fig/http-message-util" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/php-di/invoker" />
+      <path value="$PROJECT_DIR$/vendor/php-di/phpdoc-reader" />
+      <path value="$PROJECT_DIR$/vendor/php-di/php-di" />
+      <path value="$PROJECT_DIR$/vendor/opis/closure" />
+      <path value="$PROJECT_DIR$/vendor/slim/php-view" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1hRxkwuEpiBFI9fRZvh9RiqE83Y" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/home" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="settings.php.debug.servers" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\alexa\htdocs\slim\src" />
+      <recent name="C:\Users\alexa\htdocs\slim" />
+      <recent name="C:\Users\alexa\htdocs\slim\tests" />
+      <recent name="C:\Users\alexa\htdocs\slim\tests\TestCase" />
+      <recent name="C:\Users\alexa\htdocs\slim\templates\home" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\alexa\htdocs\slim\templates\home" />
+    </key>
+  </component>
+  <component name="RunManager" selected="PHP Script.index">
+    <configuration name="index" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/public/index.php">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="Ubuntu 20.04" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <configuration name="home" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="slim">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="PHP Script.index" />
+      <item itemvalue="PHP Web Page.home" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f9aaed16-baed-4a70-9a1c-52d6395126d4" name="Default Changelist" comment="" />
+      <created>1599987852567</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599987852567</updated>
+      <workItem from="1599987853663" duration="19780000" />
+      <workItem from="1600449970031" duration="8201000" />
+      <workItem from="1600532008923" duration="673000" />
+      <workItem from="1600596683983" duration="1976000" />
+      <workItem from="1600618355974" duration="5148000" />
+      <workItem from="1600702420296" duration="3144000" />
+      <workItem from="1600792692350" duration="7904000" />
+      <workItem from="1600964465177" duration="8365000" />
+      <workItem from="1601050360037" duration="2084000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TerminalProjectNonSharedOptionsProvider">
+    <option name="shellPath" value="wsl.exe" />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="248" y="85" key="#CLI_Interpreters" timestamp="1599988463971">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="248" y="85" key="#CLI_Interpreters/0.0.1333.859@0.0.1333.859" timestamp="1599988463971" />
+    <state x="124" y="61" width="1086" height="798" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599989246300">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="124" y="61" width="1086" height="798" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1333.859@0.0.1333.859" timestamp="1599989246300" />
+    <state x="474" y="146" key="#com.intellij.ide.util.MemberChooser" timestamp="1600965339828">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="474" y="146" key="#com.intellij.ide.util.MemberChooser/0.0.1333.859@0.0.1333.859" timestamp="1600965339828" />
+    <state x="442" y="80" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600793551894">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="442" y="80" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1333.859@0.0.1333.859" timestamp="1600793551894" />
+    <state x="402" y="177" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600967459124">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="402" y="177" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1333.859@0.0.1333.859" timestamp="1600967459124" />
+    <state x="405" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600452185594">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="405" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1333.859@0.0.1333.859" timestamp="1600452185594" />
+    <state x="366" y="175" key="FileChooserDialogImpl" timestamp="1600455908420">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="366" y="175" key="FileChooserDialogImpl/0.0.1333.859@0.0.1333.859" timestamp="1600455908420" />
+    <state width="1277" height="272" key="GridCell.Tab.0.bottom" timestamp="1600072443264">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.0.bottom/0.0.1333.859@0.0.1333.859" timestamp="1600072443264" />
+    <state width="1277" height="272" key="GridCell.Tab.0.center" timestamp="1600072443264">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.0.center/0.0.1333.859@0.0.1333.859" timestamp="1600072443264" />
+    <state width="1277" height="272" key="GridCell.Tab.0.left" timestamp="1600072443264">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.0.left/0.0.1333.859@0.0.1333.859" timestamp="1600072443264" />
+    <state width="1277" height="272" key="GridCell.Tab.0.right" timestamp="1600072443264">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.0.right/0.0.1333.859@0.0.1333.859" timestamp="1600072443264" />
+    <state width="1277" height="272" key="GridCell.Tab.1.bottom" timestamp="1600072443265">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.1.bottom/0.0.1333.859@0.0.1333.859" timestamp="1600072443265" />
+    <state width="1277" height="272" key="GridCell.Tab.1.center" timestamp="1600072443264">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.1.center/0.0.1333.859@0.0.1333.859" timestamp="1600072443264" />
+    <state width="1277" height="272" key="GridCell.Tab.1.left" timestamp="1600072443264">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.1.left/0.0.1333.859@0.0.1333.859" timestamp="1600072443264" />
+    <state width="1277" height="272" key="GridCell.Tab.1.right" timestamp="1600072443264">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1277" height="272" key="GridCell.Tab.1.right/0.0.1333.859@0.0.1333.859" timestamp="1600072443264" />
+    <state width="1291" height="275" key="GridCell.Tab.2.bottom" timestamp="1600014493751">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.2.bottom/0.0.1333.859@0.0.1333.859" timestamp="1600014493751" />
+    <state width="1291" height="275" key="GridCell.Tab.2.center" timestamp="1600014493751">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.2.center/0.0.1333.859@0.0.1333.859" timestamp="1600014493751" />
+    <state width="1291" height="275" key="GridCell.Tab.2.left" timestamp="1600014493751">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.2.left/0.0.1333.859@0.0.1333.859" timestamp="1600014493751" />
+    <state width="1291" height="275" key="GridCell.Tab.2.right" timestamp="1600014493751">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.2.right/0.0.1333.859@0.0.1333.859" timestamp="1600014493751" />
+    <state x="765" y="222" key="NewPhpClassDialog" timestamp="1601051274109">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="765" y="222" key="NewPhpClassDialog/0.0.1333.859@0.0.1333.859" timestamp="1601051274109" />
+    <state x="504" y="354" key="NewPhpFileDialog" timestamp="1600967797557">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="504" y="354" key="NewPhpFileDialog/0.0.1333.859@0.0.1333.859" timestamp="1600967797557" />
+    <state x="177" y="75" key="SettingsEditor" timestamp="1599989227158">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="177" y="75" key="SettingsEditor/0.0.1333.859@0.0.1333.859" timestamp="1599989227158" />
+    <state x="0" y="0" width="981" height="844" key="dock-window-1" timestamp="1599998401414">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="0" y="0" width="981" height="844" key="dock-window-1/0.0.1333.859@0.0.1333.859" timestamp="1599998401414" />
+    <state x="333" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1600626163615">
+      <screen x="0" y="0" width="1333" height="859" />
+    </state>
+    <state x="333" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1333.859@0.0.1333.859" timestamp="1600626163615" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PhpLocalRunConfigurationType">
+        <watch expression="$GLOBALS[&quot;argv&quot;][0]" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
