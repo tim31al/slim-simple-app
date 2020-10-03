@@ -9,7 +9,7 @@ trait WebTestTrait
     protected string $baseUrl = 'http://slim';
 
     private function loadEndpoint($url) {
-        $url = $this->baseUrl.$url;
+        $url = $this->baseUrl . $url;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

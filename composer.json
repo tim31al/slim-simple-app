@@ -5,12 +5,15 @@
     "php-di/php-di": "^6.2",
     "slim/php-view": "^3.0",
     "monolog/monolog": "^2.1",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "ext-http": "*"
   },
   "autoload": {
     "psr-4": {
       "App\\": "src",
-      "Test\\": "tests"
+      "Test\\": "tests",
+      "Lib\\": "lib"
     }
   },
   "require-dev": {

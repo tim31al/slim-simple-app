@@ -1,6 +1,6 @@
 <?php
 
-namespace lib\Database;
+namespace Lib\Database;
 
 use PhpParser\Node\Expr\Array_;
 use Psr\Container\ContainerInterface;

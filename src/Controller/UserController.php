@@ -16,10 +16,10 @@ class UserController extends BaseController
         $email = 'email@com';
 
         $user = new User();
-        $user->setName('Alex');
+        $user->setUsername('Alex');
         $user->setEmail('email');
 
-        return $this->view->render($response, 'user/index.php', ['user' => $user]);
+        return $this->view->render($response, 'user/index.php', ['user' => $user, 'scripts' => ['user']]);
 
     }
 

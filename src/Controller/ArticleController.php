@@ -4,34 +4,40 @@
 namespace App\Controller;
 
 
+use App\Model\Article;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ArticleController extends BaseController
 {
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+        $this->model = new Article($container);
+    }
+
     public function index(Request $request, Response $response, array $args = [])
     {
-        $sql = 'SELECT * FROM articles';
-        $smtp = $this->getPdo()->prepare($sql);
-        $smtp->execute();
-        $articles = $smtp->fetchAll();
+        $articles = $this->model->read();
 
         return $this->view->render($response, 'article/index.php', [
             'title' => 'Articles',
-            'articles' => $articles
+            'articles' => $articles,
+            //'scripts' => ['articles']
             ]);
     }
 
-    private function getPdo()
+    public function view(Request $request, Response $response)
     {
-        $options = [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::ATTR_EMULATE_PREPARES => false,
-        ];
+        $id = (int) $request->getAttribute('id');
+        $article = $this->model->read($id);
 
-        return new \PDO("mysql:host=localhost;dbname=fast_route",
-            'root', '', $options);
+        return $this->view->render($response, 'article/view.php', [
+            'title' => $article['title'],
+            'article' => $article
+        ]);
     }
+
 
 }

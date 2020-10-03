@@ -1,15 +1,12 @@
 <?php
 
-use Psr\Container\ContainerInterface;
-use function DI\factory;
-
 $rootPath = realpath(__DIR__ . '/..');
 
 return [
     'database' => [
         'driver' => 'mysql',
         'host' => 'localhost',
-        'name' => 'fast_route',
+        'name' => 'slim',
         'user' => 'root',
         'password' => ''
     ],
@@ -26,8 +23,7 @@ return [
     // Path to Views
     'view_path' => $rootPath . '/src/View',
 
-    // DatabaseConnection
-    'db' => function (ContainerInterface $container) {
-        return new \lib\Database\DatabaseConnection($container->get('database'));
-    }
+    // Log path
+    'log_path' => $rootPath . '/var/log',
+
 ];

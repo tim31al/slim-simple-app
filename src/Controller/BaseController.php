@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Model\ModelInterface;
+use Monolog\Logger;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\PhpRenderer;
+
+use Throwable;
 
 abstract class BaseController {
 
@@ -13,6 +16,10 @@ abstract class BaseController {
      * @var PhpRenderer $view
      */
     protected PhpRenderer $view;
+
+    protected Logger $log;
+
+    protected ModelInterface $model;
 
     /**
      * BaseController constructor.
@@ -22,11 +29,18 @@ abstract class BaseController {
     {
         $this->view = new PhpRenderer($container->get('view_path'));
         $this->view->setLayout('layout.php');
+
+        $this->log = $container->get('log');
     }
 
     protected function render(Response $response, string $template, array $params = []) : Response
     {
-        return $this->view->render($response, $template, $params);
+        try {
+            return $this->view->render($response, $template, $params);
+        } catch (Throwable $e) {
+            print_r($e->getTrace());
+            exit($e->getCode());
+        }
     }
 
     /**

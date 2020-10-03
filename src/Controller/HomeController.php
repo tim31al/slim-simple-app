@@ -6,18 +6,21 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\PhpRenderer;
+use Monolog\Logger;
 
 class HomeController extends BaseController
 {
 
-    public function index(Request $request, Response $response, array $args = [])
+    public function index(Request $request, Response $response)
     {
-        return $this->view->render($response, 'home/index.php', ['title' => 'First page']);
+        return $this->render($response, 'home/index.php', ['title' => 'First page']);
     }
 
-    public function hello(Request $request, Response $response, array $args = [])
+    public function login(Request $request, Response $response)
     {
-        return $this->view->render($response, 'home/hello.php', ['name' => 'Alex']);
+        $_SESSION['referer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
+        return $this->render($response, 'home/login.php');
+
     }
 
     public function server(Request $request, Response $response, array $args = [])

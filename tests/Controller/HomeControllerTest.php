@@ -4,10 +4,11 @@
 namespace Test\Controller;
 
 use PHPUnit\Framework\TestCase;
+use Test\WebTestCase;
 use Test\WebTestTrait;
 
 
-class HomeControllerTest extends TestCase
+class HomeControllerTest extends WebTestCase
 {
     use WebTestTrait;
 
@@ -16,21 +17,26 @@ class HomeControllerTest extends TestCase
         $this->printToConsole(__METHOD__);
         $response = $this->loadEndpoint('/');
 
-
         $this->assertNotEmpty($response, 'response empty');
 
         $this->assertStringContainsString('Home page', $response['body']);
 
     }
 
-//    public function testHello()
+//    public function testServer()
 //    {
 //        $this->printToConsole(__METHOD__);
-//        $response = $this->loadEndpoint('/hello');
+//        $response = $this->loadEndpoint('/server');
 //
-////        $this->printToConsole(print_r($response['info']));
+//        $this->assertResponseIsOk($response['info']);
 //
-//        $this->assertNotFalse(strpos($response['body'], 'Hello'));
 //    }
+
+    public function testNoRoute()
+    {
+        $response = $this->loadEndpoint('/no-route');
+
+        $this->assertFalse($response['info']['http_code'] == 200);
+    }
 
 }

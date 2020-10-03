@@ -2,8 +2,21 @@
 /**
  * @var String $title
  * @var String $content
+ * @var Array $scripts
  */
 
+if (!isset($title))
+	$title = 'Test';
+
+$logInOut['href'] = $logInOut['title'] = '';
+
+if (isset($_SESSION['user'])) {
+	$logInOut['href'] = '/logout';
+	$logInOut['title'] = 'Logout';
+} else {
+	$logInOut['href'] = '/login';
+	$logInOut['title'] = 'LogIn';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,20 +59,26 @@
             border: 2px solid dimgrey;
             box-shadow: gray;
             border-radius: 4px;
-	        color: dimgrey;
+            color: dimgrey;
         }
 
         .nav li:hover {
             cursor: pointer;
-	        background-color: dimgrey;
+            background-color: dimgrey;
         }
+
         .nav li:hover a {
-	        color: white;
+            color: white;
         }
 
         .nav li a {
             text-decoration: none;
             color: dimgrey;
+        }
+
+        .active {
+            color: white;
+            background-color: dimgrey;
         }
 
 
@@ -70,76 +89,22 @@
 	<ul>
 		<li><a href="/" title="Главная">Main</a></li>
 		<li><a href="/server" title="Сервер">Server</a></li>
-<!--		<li><a href="/hello" title="Hello">Hello</a></li>-->
-		<li><a href="/user" title="User">User</a> </li>
+		<li><a href="/user" title="User">User</a></li>
 		<li><a href="/articles" title="Статьи">Articles</a></li>
-		<li><a href="/api/articles" title="Api">Api</a> </li>
+		<li><a href="/api/articles" title="Api">Api</a></li>
+		<li><a href="<?=$logInOut['href']?>"><?= $logInOut['title'] ?></a></li>
 	</ul>
 </div>
 <div class="wrapper">
     <?= $content ?>
-	<div class="tester"
-	     style="border: 1px solid deepskyblue; border-radius: 4px; margin: 1rem; padding: 1rem; width: 50%">
-		<button id="test">Test</button>
-	</div>
-
 </div>
 
-<!--promise tests-->
-<script>
-    if (window.location.pathname === '/')
-        getTest();
-    else
-        document.querySelector('div.tester').remove();
+<?php if (isset($scripts)) : ?>
+    <?php foreach ($scripts as $script) : ?>
+		<script src="js/<?= $script ?>.js"></script>
+    <?php endforeach; ?>
+<?php endif; ?>
 
-    function getTest() {
-        let btn = document.getElementById('test');
-
-        btn.addEventListener('click', showApi);
-
-        function showApi() {
-            let counter = 0;
-            let ids = [2, 19, 20];
-            let url = '/api/article/';
-
-            Promise.all(ids.map(id => fetch(`${url}${id}`)))
-                .then(responses => Promise.all(responses.map(r => r.json())))
-                .then(results => results.forEach(r => console.log(r)))
-                .catch(er => console.log(er));
-        }
-    }
-</script>
-
-<script>
-    'use strict';
-    let article = document.getElementById('articles');
-    let divContent = document.createElement('div');
-    divContent.className = 'content'
-
-    divContent.onclick = () => divContent.remove();
-
-    if(article) {
-        article.onclick = function (event) {
-            let elem = event.target.closest('li');
-            if (!elem) return;
-
-            let id = elem.dataset.id;
-            if (!id) return;
-
-            if (elem.querySelector('div.content')) return;
-
-            fetch(`/api/article/${id}`)
-                .then(response => response.json())
-                .then(data => showArticle(data.content, elem));
-        }
-    }
-
-    function showArticle(content, elem) {
-        divContent.innerHTML = content;
-        elem.append(divContent);
-        divContent.prepend(document.createElement('hr'));
-
-    }
-</script>
+<script src="/js/nav.js"></script>
 </body>
 </html>
