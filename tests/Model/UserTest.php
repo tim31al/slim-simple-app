@@ -49,10 +49,24 @@ class UserTest extends TestCase
         $stmt = $model->update();
         $this->assertTrue($stmt);
 
+        // Test validate change existed username
+        $model->setUsername('admin');
+        $valid = $model->validateUsername();
+        $this->assertFalse($valid);
+
+
+        $assert = array_search('User already exists', $model->getErrors('username'));
+
+        $this->assertNotFalse($assert);
+        $this->assertIsInt($assert);
+
+        // return username
+        $model->setUsername($username);
 
         // Test update role
         $model->setRole('ROLE_ADMIN');
         $this->assertTrue($model->validate(false));
+        $this->assertTrue($model->update());
 
         // Test error
 //        $role = 'swin';
@@ -61,7 +75,6 @@ class UserTest extends TestCase
 //        } catch (\InvalidArgumentException $e) {
 //            $statement = sprintf('setRole("%s"): %s', $role, $e->getMessage());
 //            fwrite(STDOUT, $statement."\n");
-//
 //        }
 
 

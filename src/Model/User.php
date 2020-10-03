@@ -6,13 +6,18 @@ namespace App\Model;
 use DateTime;
 use InvalidArgumentException;
 use PDO;
-use phpDocumentor\Reflection\Types\Object_;
 
 class User extends BaseModel implements IdentityInterface
 {
     protected const TABLE = 'user';
 
-    protected const ROLES = ['user' => 'ROLE_USER', 'creator' => 'ROLE_CREATOR', 'admin' => 'ROLE_ADMIN'];
+    protected const ROLES = [
+        'user' => 'ROLE_USER',
+        'creator' => 'ROLE_CREATOR',
+        'admin' => 'ROLE_ADMIN'
+    ];
+
+    protected array $validationErrors;
 
     protected int $id;
 
@@ -90,12 +95,11 @@ class User extends BaseModel implements IdentityInterface
      */
     public function setPassword(string $password): void
     {
-        $this->password = $password;
-    }
-
-    private function cryptPassword(): string
-    {
-        return password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 9]);
+        $pass = password_hash($password, PASSWORD_BCRYPT, ['cost' => 9]);
+        if ($pass)
+            $this->password = $pass;
+        else
+            throw new InvalidArgumentException('Password hash missing');
     }
 
 
@@ -162,7 +166,7 @@ class User extends BaseModel implements IdentityInterface
         if (empty($user))
             return false;
 
-        if (!password_verify($this->password, $user['password']))
+        if ($user['password'] !== $this->getPassword() )
             return false;
 
         unset($user['password']);
@@ -216,8 +220,7 @@ class User extends BaseModel implements IdentityInterface
         $smtp->bindParam(':username', $this->username);
         $smtp->bindParam(':email', $this->email);
 
-        $pass = $this->cryptPassword();
-        $smtp->bindParam(':password', $pass);
+        $smtp->bindParam(':password', $this->password);
 
         $smtp->bindParam(':fullname', $this->fullName);
         $smtp->bindParam(':role', $this->role);
@@ -275,9 +278,18 @@ class User extends BaseModel implements IdentityInterface
         return $smtp->execute();
     }
 
+    public function getErrors(string $key = null): array
+    {
+        if($key && array_key_exists($key, $this->validationErrors)) {
+            return $this->validationErrors[$key];
+        }
+
+        return $this->validationErrors;
+
+    }
+
     public function validate($isNew = true): bool
     {
-
         $isValid =
             !empty($this->username) &&
             !empty($this->email) &&
@@ -287,5 +299,32 @@ class User extends BaseModel implements IdentityInterface
         $isValid &= (bool)filter_var($this->email, FILTER_VALIDATE_EMAIL);
 
         return $isNew ? $isValid && empty($this->id) : !empty($this->id);
+    }
+
+    public function validateUsername(): bool
+    {
+        if (empty($this->username)) {
+            $this->validationErrors['username'][] = 'Empty username';
+            return false;
+        }
+
+        $regex = '/^[a-zA-Z][a-zA-Z0-9]{3,15}$/';
+        if (preg_match($regex, $this->username) < 1) {
+            $this->validationErrors['username'][] = 'Unacceptable symbols';
+            return false;
+        }
+
+        $sql = 'SELECT COUNT(*) as count FROM ' . self::TABLE . ' WHERE username=:username';
+        $smtp = $this->pdo->prepare($sql);
+        $smtp->bindParam(':username', $this->username);
+        $smtp->execute();
+        $count = (int) $smtp->fetch()['count'];
+
+        if($count > 0) {
+            $this->validationErrors['username'][] = 'User already exists';
+            return false;
+        }
+
+        return true;
     }
 }
