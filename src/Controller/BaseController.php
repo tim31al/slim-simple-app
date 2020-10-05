@@ -21,6 +21,9 @@ abstract class BaseController {
 
     protected ModelInterface $model;
 
+    protected ContainerInterface $container;
+
+
     /**
      * BaseController constructor.
      * @param ContainerInterface $container
@@ -31,6 +34,9 @@ abstract class BaseController {
         $this->view->setLayout('layout.php');
 
         $this->log = $container->get('log');
+
+        $this->container = $container;
+
     }
 
     protected function render(Response $response, string $template, array $params = []) : Response

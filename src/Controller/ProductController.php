@@ -1,21 +1,17 @@
 <?php
 
-
 namespace App\Controller;
 
-
-use App\Entity\User;
+use App\Entity\Product;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
-
-class UserController extends BaseController
+class ProductController extends BaseController
 {
+
     private EntityManager $em;
-    private EntityRepository $repo;
 
     /**
      * @param ContainerInterface $container
@@ -24,26 +20,24 @@ class UserController extends BaseController
     {
         parent::__construct($container);
         $this->em = $container->get(EntityManager::class);
-        $this->repo = ($container->get(EntityManager::class))->getRepository(User::class);
     }
 
     public function index(Request $request, Response $response)
     {
-        $users = ($this->em->getRepository(User::class))->findAll();
+        $products = ($this->em->getRepository(Product::class))->findAll();
 
-        return $this->render($response, 'user/index.php', [
-            'users' => $users
+        return $this->render($response, 'product/index.php', [
+            'products' => $products
         ]);
     }
 
     public function view(Request $request, Response $response)
     {
         $id = (int)$request->getAttribute('id');
-        $user = $this->repo->find($id);
+        $product = ($this->em->getRepository(Product::class))->find($id);
 
-        return $this->render($response, 'user/view.php', [
-            'user' => $user
+        return $this->render($response, 'product/view.php', [
+            'product' => $product
         ]);
     }
-
 }

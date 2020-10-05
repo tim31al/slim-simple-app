@@ -1,16 +1,19 @@
 <?php
 /**
+ * @var <User> $users
  * @var User $user
- */
+ *
+ **/
 
-use App\Model\User;
+use App\Entity\User;
 
 ?>
-<h1>Пользователь <?=$user->getUsername()?></h1>
-<div style="margin: 1rem 0;">
-	<form name="user">
-		<input type="text" name="username" value="">
-		<input type="password" name="password" value="">
-		<input type="submit" value="Send" id="submit">
-	</form>
-</div>
+<ul id="articles">
+    <?php foreach ($users as $user): ?>
+		<li style="" data-id="<?=$user->getId()?>">
+			<a href="/user/<?=$user->getId()?>" title="Показать"> <?= $user->getUsername() ?></a>
+		</li>
+    <?php endforeach; ?>
+
+</ul>
+

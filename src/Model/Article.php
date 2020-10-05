@@ -17,7 +17,7 @@ class Article extends BaseModel
      * @param bool $isNew (true if Save, false if Update)
      * @return bool
      */
-    public function validate($isNew = true)
+    public function validate($isNew = true): bool
     {
         $isValid =
             !empty($this->title) &&

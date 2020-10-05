@@ -89,8 +89,9 @@ if (isset($_SESSION['user'])) {
 	<ul>
 		<li><a href="/" title="Главная">Main</a></li>
 		<li><a href="/server" title="Сервер">Server</a></li>
-		<li><a href="/user" title="User">User</a></li>
+		<li><a href="/users" title="User">Users</a></li>
 		<li><a href="/articles" title="Статьи">Articles</a></li>
+		<li><a href="/products" title="Doctrine">Products</a> </li>
 		<li><a href="/api/articles" title="Api">Api</a></li>
 		<li><a href="<?=$logInOut['href']?>"><?= $logInOut['title'] ?></a></li>
 	</ul>

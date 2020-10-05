@@ -4,6 +4,10 @@
 namespace Lib\Middleware;
 
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -11,8 +15,18 @@ use Slim\Psr7\Response;
 
 class AuthenticationMiddleware
 {
-    private const LOGIN = 'alex';
-    private const PASS = 'r477ed';
+
+    private EntityRepository $userRepository;
+
+    /**
+     * AuthenticationMiddleware constructor.
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->userRepository = ($container->get(EntityManager::class))->getRepository(User::class);
+    }
+
 
     public function __invoke(Request $request, RequestHandler $handler)
     {
@@ -26,14 +40,21 @@ class AuthenticationMiddleware
                     'Basic realm="Access to site", charset="UTF-8');
 
         } else {
+            unset($_SERVER['PHP_AUTH_USER']);
+            unset($_SERVER['PHP_AUTH_PW']);
+
             return $handler->handle($request);
         }
 
     }
 
-    private function checkUser($user, $pass): bool
+    private function checkUser($username, $password): bool
     {
-        return $user == self::LOGIN && $pass == self::PASS;
+        $username = htmlspecialchars($username);
+        $user = $this->userRepository->findOneBy(['username' => $username]);
+        if (! $user instanceof User)
+            return false;
 
+        return password_verify($password, $user->getPassword());
     }
 }

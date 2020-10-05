@@ -14,11 +14,15 @@ class App
 
     public function __construct($test = false)
     {
-        if (!$test) {
-            session_start([
-                'cookie_lifetime' => 86400,
-            ]);
-        }
+//        if (!$test) {
+//            session_start([
+//                'cookie_lifetime' => 86400,
+//            ]);
+//        }
+
+//        session_destroy();
+//
+//        unset($_SERVER['PHP_AUTH_USER']);
 
         $rootPath = realpath(__DIR__ . '/..');
 

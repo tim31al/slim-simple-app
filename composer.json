@@ -7,7 +7,10 @@
     "monolog/monolog": "^2.1",
     "ext-pdo": "*",
     "ext-json": "*",
-    "ext-http": "*"
+    "doctrine/orm": "^2.7",
+    "laminas/laminas-authentication": "^2.7",
+    "laminas/laminas-db": "^2.11",
+    "laminas/laminas-session": "^2.9"
   },
   "autoload": {
     "psr-4": {
