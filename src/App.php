@@ -14,11 +14,11 @@ class App
 
     public function __construct($test = false)
     {
-//        if (!$test) {
-//            session_start([
-//                'cookie_lifetime' => 86400,
-//            ]);
-//        }
+        if (!$test) {
+            session_start([
+                'cookie_lifetime' => 86400,
+            ]);
+        }
 
 //        session_destroy();
 //

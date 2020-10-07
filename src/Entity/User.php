@@ -1,5 +1,4 @@
 <?php
-//declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -14,11 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-    private const USER = 'ROLE_USER';
-    private const CREATOR = 'ROLE_CREATOR';
-    private const ADMIN = 'ROLE_ADMIN';
 
-    public const ROLES = [self::USER, self::CREATOR, self::ADMIN];
+    public const ROLES = [
+        'user' => 'ROLE_USER',
+        'editor' => 'ROLE_EDITOR',
+        'admin' => 'ROLE_ADMIN'
+    ];
 
     /**
      * @ORM\Id
@@ -41,7 +41,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected string $fullname;
+    protected string $fullName;
     /**
      * @ORM\Column(type="boolean", options={"default":false})
      */
@@ -61,22 +61,10 @@ class User
 
     /**
      * User constructor.
-     * @param string $username
-     * @param string $email
-     * @param string $password
-     * @param string $fullname
-     * @param bool $active
-     * @param string $role
      */
-    public function __construct(string $username = '', string $email  = '', string $password = '',
-                                string $fullname = '', bool $active = false, string $role = self::USER)
+    public function __construct()
     {
-        $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
-        $this->fullname = $fullname;
-        $this->active = $active;
-        $this->role = $role;
+        $this->active = false;
     }
 
 
@@ -93,7 +81,7 @@ class User
      */
     public function setRole(string $role): void
     {
-        $this->role = in_array($role, self::ROLES) ? $role : self::USER;
+        $this->role = in_array($role, self::ROLES) ? $role : self::ROLES['user'];
     }
 
 
@@ -159,23 +147,24 @@ class User
      */
     public function cryptPass()
     {
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $pass = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->password = $pass ? $pass : $this->password;
     }
 
     /**
      * @return string
      */
-    public function getFullname(): string
+    public function getFullName(): string
     {
-        return $this->fullname;
+        return $this->fullName;
     }
 
     /**
-     * @param string $fullname
+     * @param string $fullName
      */
-    public function setFullname(string $fullname): void
+    public function setFullName(string $fullName): void
     {
-        $this->fullname = $fullname;
+        $this->fullName = $fullName;
     }
 
     /**
@@ -193,6 +182,7 @@ class User
     {
         $this->active = $active;
     }
+
 
     /**
      * @return DateTime
@@ -219,14 +209,13 @@ class User
     }
 
     /**
-     * @param DateTime
+     * @param DateTime $lastVisit
      */
     public function setLastVisit(DateTime $lastVisit): void
     {
         $this->lastVisit = $lastVisit;
 
     }
-
 
 
 }

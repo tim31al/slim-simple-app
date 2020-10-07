@@ -24,11 +24,11 @@ class Auth
     {
         $dbAdapter = new DbAdapter([
             'driver' => 'Pdo_Mysql',
-            'database' => $container->get('database')['name'],
-            'username' => $container->get('database')['user'],
-            'password' => $container->get('database')['password'],
-            'hostname' => $container->get('database')['host'],
-            'port' => $container->get('database')['port']
+            'fixtures' => $container->get('fixtures')['name'],
+            'username' => $container->get('fixtures')['user'],
+            'password' => $container->get('fixtures')['password'],
+            'hostname' => $container->get('fixtures')['host'],
+            'port' => $container->get('fixtures')['port']
         ]);
 
         $passwordValidation = function ($hash, $password) {

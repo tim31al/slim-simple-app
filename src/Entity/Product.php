@@ -48,11 +48,11 @@ class Product
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): DateTime
     {
-        return $this->createdAt->format('d.m.Y H:m:s');
+        return $this->createdAt;
     }
 
     /**

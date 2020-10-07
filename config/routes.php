@@ -1,6 +1,6 @@
 <?php
 
-use Lib\Middleware\AuthenticationMiddleware;
+use App\Middleware\AuthenticationMiddleware;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -10,57 +10,55 @@ return function (App $app) {
     $app->get('/', 'App\Controller\HomeController:index')->setName('home');
 
     // login
-    $app->map(['GET', 'POST'], '/login', 'App\Controller\HomeController:login');
+    $app->get('/login', 'App\Controller\HomeController:login');
 
-//    $app->get('/login', 'App\Controller\HomeController:login');
-//
-//    $app->post('/login', function (Request $request, Response $response) {
-//
-//        $data = $request->getParsedBody();
-//
-//        if ($data['username'] == 'alex' && $data['password'] == 'r477ed') {
-//
-//            $_SESSION['user'] = $data['username'];
-//
-//            $referer = '/';
-//
-//            if (isset($_SESSION['referer'])) {
-//                $referer = $_SESSION['referer'];
-//                unset($_SESSION['referer']);
-//            }
-//
-//
-//            return $response
-//                ->withHeader('Location', $referer)
-//                ->withStatus(302);
-//        } else {
-//            return $response->withHeader('Location', '/login');
-//        }
-//    });
-//
-//    $app->get('/logout', function (Request $request, Response $response) {
-//
-//        $referer = '/';
-//
-//        if (isset($_SESSION['referer'])) {
-//            $referer = $_SESSION['referer'];
-//            unset($_SESSION['referer']);
-//        } elseif (isset($_SERVER['HTTP_REFERER'])) {
-//            $referer = $_SERVER['HTTP_REFERER'];
-//        }
-//
-//        if (isset($_SESSION['user'])) {
-//            unset($_SESSION['user']);
-//        }
-//
-//        return $response
-//            ->withHeader('Location', $referer)
-//            ->withStatus(302);
-//    });
+    $app->post('/login', function (Request $request, Response $response) {
+
+        $data = $request->getParsedBody();
+
+        if ($data['username'] == 'alex' && $data['password'] == 'r477ed') {
+
+            $_SESSION['user'] = $data['username'];
+
+            $referer = '/';
+
+            if (isset($_SESSION['referer'])) {
+                $referer = $_SESSION['referer'];
+                unset($_SESSION['referer']);
+            }
 
 
-    $app->get('/server', 'App\Controller\HomeController:server');
-//        ->add(new AuthenticationMiddleware($app->getContainer()));
+            return $response
+                ->withHeader('Location', $referer)
+                ->withStatus(302);
+        } else {
+            return $response->withHeader('Location', '/login');
+        }
+    });
+
+    $app->get('/logout', function (Request $request, Response $response) {
+
+        $referer = '/';
+
+        if (isset($_SESSION['referer'])) {
+            $referer = $_SESSION['referer'];
+            unset($_SESSION['referer']);
+        } elseif (isset($_SERVER['HTTP_REFERER'])) {
+            $referer = $_SERVER['HTTP_REFERER'];
+        }
+
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+        }
+
+        return $response
+            ->withHeader('Location', $referer)
+            ->withStatus(302);
+    });
+
+
+    $app->get('/server', 'App\Controller\HomeController:server')
+        ->add(new AuthenticationMiddleware($app->getContainer()));
 
     $app->get('/articles', 'App\Controller\ArticleController:index')->setName('articles');
     $app->get('/article/{id:\d+}', 'App\Controller\ArticleController:view');

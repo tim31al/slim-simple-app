@@ -9,14 +9,14 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
-use Lib\Database\DatabaseConnection;
+use App\Database\DatabaseConnection;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 return [
     // DatabaseConnection
     'db' => function (ContainerInterface $container) {
-        return new DatabaseConnection($container->get('database'));
+        return new DatabaseConnection($container->get('fixtures'));
     },
 
     // monolog logger

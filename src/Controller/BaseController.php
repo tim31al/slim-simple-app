@@ -10,7 +10,8 @@ use Slim\Views\PhpRenderer;
 
 use Throwable;
 
-abstract class BaseController {
+abstract class BaseController
+{
 
     /**
      * @var PhpRenderer $view
@@ -39,14 +40,9 @@ abstract class BaseController {
 
     }
 
-    protected function render(Response $response, string $template, array $params = []) : Response
+    protected function render(Response $response, string $template, array $params = []): Response
     {
-        try {
-            return $this->view->render($response, $template, $params);
-        } catch (Throwable $e) {
-            print_r($e->getTrace());
-            exit($e->getCode());
-        }
+        return $this->view->render($response, $template, $params);
     }
 
     /**
@@ -58,7 +54,6 @@ abstract class BaseController {
 
         return substr($className, 0, strlen('Controller'));
     }
-
 
 
 }
