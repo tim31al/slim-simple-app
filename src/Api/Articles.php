@@ -2,16 +2,22 @@
 
 namespace App\Api;
 
-use App\Model\Article;
-//use Monolog\Logger;
+use App\Entity\Article;
+use DateTime;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Container\ContainerInterface;
 
 class Articles
 {
-    private Article $model;
-//    private Logger $log;
+    private const MESSAGE = 'Result';
+    private const STATUS_ERROR = 'ERROR';
+    private const STATUS_OK = 'OK';
+    private EntityManager $em;
+    private string $status;
 
     /**
      * Articles constructor.
@@ -19,17 +25,23 @@ class Articles
      */
     public function __construct(ContainerInterface $container)
     {
-//        $this->log = $container->get('log');
-        $this->model = new Article($container);
+        $this->em = $container->get(EntityManager::class);
+        $this->status = self::STATUS_OK;
     }
 
     // curl -X GET http://slim/api/articles
     // curl -X GET http://slim/api/articles/1
     public function read(Request $request, Response $response)
     {
-        $id = $request->getAttribute('id');
+        $id = (int)$request->getAttribute('id');
 
-        $data = $this->model->read($id);
+        $repo = $this->em->getRepository(Article::class);
+        $data = $id ?
+            ($repo->find($id))->toArray() :
+            array_map(function ($item) {
+                return $item->toArray();
+            }, $repo->findAll());
+
 
         $response->getBody()->write(json_encode($data));
         return $response->withHeader('Content-Type', 'application/json');
@@ -40,40 +52,71 @@ class Articles
     {
         $data = $request->getParsedBody();
 
-        $this->model->setTitle($data['title']);
-        $this->model->setContent($data['content']);
 
-        $id = $this->model->create();
+        $article = new Article();
+        $article->setTitle($data['title']);
+        $article->setContent($data['content']);
+        $article->setDate(new DateTime());
 
-        $response->getBody()->write(json_encode(['id' => $id]));
-//        $response->getBody()->write(json_encode([$this->model->read($id)]));
+        try {
+            $this->em->persist($article);
+            $this->em->flush();
+        } catch (OptimisticLockException $e) {
+        } catch (ORMException $e) {
+            $this->status = self::STATUS_ERROR;
+        }
+
+        $response->getBody()->write(json_encode([self::MESSAGE => $this->status]));
+
         return $response->withHeader('Content-Type', 'application/json');
     }
 
     //curl -X PUT http://slim/api/article/33 -H "Content-type: application/json" -d '{"title":"Обновленная", "content":"Обновленная статья"}'
     public function update(Request $request, Response $response)
     {
-        $id = $request->getAttribute('id');
+        $id = (int)$request->getAttribute('id');
         $data = $request->getParsedBody();
-        $this->model->setId($id);
-        $this->model->setTitle($data['title']);
-        $this->model->setContent($data['content']);
 
-        $status = $this->model->update() ? 'OK' : 'NOT';
+        $article = ($this->em->getRepository(Article::class))
+            ->find($id);
 
-        $response->getBody()->write(json_encode(['article updated' => $status]));
+
+        $article->setTitle($data['title']);
+        $article->setContent($data['content']);
+
+
+        try {
+            $this->em->persist($article);
+            $this->em->flush();
+        } catch (OptimisticLockException $e) {
+        } catch (ORMException $e) {
+            $this->status = self::STATUS_ERROR;
+        }
+
+        $response->getBody()->write(json_encode([self::MESSAGE => $this->status]));
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    // curl -X DELETE http://slim/api/articles/33
+    // curl -X DELETE http://slim/api/article/26
     public function delete(Request $request, Response $response)
     {
-        $id = $request->getAttribute('id');
-        $this->model->setId($id);
+        $id = (int)$request->getAttribute('id');
 
-        $status = $this->model->delete() ? 'OK' : 'NOT';
+        $article = $this->em->getRepository(Article::class)->find($id);
+        try {
+            $this->em->remove($article);
+        } catch (ORMException $e) {
+            $this->status = self::STATUS_ERROR;
+        }
+        try {
+            $this->em->flush();
+        } catch (OptimisticLockException $e) {
+        } catch (ORMException $e) {
+            $this->status = self::STATUS_ERROR;
+        }
 
-        $response->getBody()->write(json_encode(['deleted' => $status]));
+
+        $response->getBody()->write(json_encode([self::MESSAGE => $this->status]));
         return $response->withHeader('Content-Type', 'application/json');
     }
 

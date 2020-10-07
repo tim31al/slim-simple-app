@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 $startTime = microtime(true);
 
-require_once __DIR__ . '/../config/cli-bootstrap.php';
+require_once __DIR__ . '/../../config/cli-bootstrap.php';
 
 /** @var ContainerInterface $container */
 $em = $container->get(EntityManager::class);
@@ -22,7 +22,7 @@ echo sprintf("Delete %d row(s)\n", $rows);
 foreach (User::ROLES as $u => $role) {
     $user = new User();
     $user->setUsername($u);
-    $user->setPassword("${u}_pass");
+    $user->setPassword($u);
     $user->setEmail("${u}@mail.com");
     $user->setFullName(strtoupper($u));
     $user->setRole($role);

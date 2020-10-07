@@ -10,31 +10,7 @@ return function (App $app) {
     $app->get('/', 'App\Controller\HomeController:index')->setName('home');
 
     // login
-    $app->get('/login', 'App\Controller\HomeController:login');
-
-    $app->post('/login', function (Request $request, Response $response) {
-
-        $data = $request->getParsedBody();
-
-        if ($data['username'] == 'alex' && $data['password'] == 'r477ed') {
-
-            $_SESSION['user'] = $data['username'];
-
-            $referer = '/';
-
-            if (isset($_SESSION['referer'])) {
-                $referer = $_SESSION['referer'];
-                unset($_SESSION['referer']);
-            }
-
-
-            return $response
-                ->withHeader('Location', $referer)
-                ->withStatus(302);
-        } else {
-            return $response->withHeader('Location', '/login');
-        }
-    });
+    $app->map(['GET', 'POST'], '/login', 'App\Controller\DefaultController:login');
 
     $app->get('/logout', function (Request $request, Response $response) {
 
@@ -47,9 +23,8 @@ return function (App $app) {
             $referer = $_SERVER['HTTP_REFERER'];
         }
 
-        if (isset($_SESSION['user'])) {
-            unset($_SESSION['user']);
-        }
+        $auth = new \App\Security\Auth();
+        $auth->getAuthService()->clearIdentity();
 
         return $response
             ->withHeader('Location', $referer)
@@ -58,7 +33,8 @@ return function (App $app) {
 
 
     $app->get('/server', 'App\Controller\HomeController:server')
-        ->add(new AuthenticationMiddleware($app->getContainer()));
+//        ->add(new AuthenticationMiddleware($app->getContainer()))
+    ;
 
     $app->get('/articles', 'App\Controller\ArticleController:index')->setName('articles');
     $app->get('/article/{id:\d+}', 'App\Controller\ArticleController:view');
@@ -72,11 +48,9 @@ return function (App $app) {
     // Api Article routes
     $app->get('/api/articles', 'App\Api\Articles:read');
     $app->get('/api/article/{id:\d+}', 'App\Api\Articles:read');
-    $app->post('/api/article', 'App\Api\Articles:create')
-        ->add(new AuthenticationMiddleware($app->getContainer()));
+    $app->post('/api/article', 'App\Api\Articles:create');
     $app->put('/api/article/{id:\d+}', 'App\Api\Articles:update');
-    $app->delete('/api/article/{id:\d+}', 'App\Api\Articles:delete')
-        ->add(new AuthenticationMiddleware($app->getContainer()));
+    $app->delete('/api/article/{id:\d+}', 'App\Api\Articles:delete');
 
 
     // включить кеширование, если debug not false

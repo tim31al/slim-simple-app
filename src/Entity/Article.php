@@ -19,6 +19,14 @@ class Article
      * @ORM\GeneratedValue
      */
     protected int $id;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
@@ -31,6 +39,14 @@ class Article
      * @ORM\Column(type="datetime")
      */
     protected DateTime $date;
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return get_object_vars($this);
+    }
 
     /**
      * @return string

@@ -3,7 +3,7 @@
 $rootPath = realpath(__DIR__ . '/..');
 
 return [
-    'fixtures' => [
+    'database' => [
         'driver' => 'mysql',
         'host' => 'localhost',
         'port' => 3306,
@@ -25,8 +25,8 @@ return [
     // Route cache
     'route_cache' => $rootPath . '/var/cache/routes.cache',
 
-    // Path to Views
-    'view_path' => $rootPath . '/src/View',
+    // Path to templates
+    'templates_path' => $rootPath . '/templates',
 
     // Log path
     'log_path' => $rootPath . '/var/log',

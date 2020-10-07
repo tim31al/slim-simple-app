@@ -4,22 +4,26 @@
 namespace App\Controller;
 
 
-use App\Model\Article;
+use App\Entity\Article;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ArticleController extends BaseController
 {
+    private EntityRepository $er;
+
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
-        $this->model = new Article($container);
+        $this->er = $container->get(EntityManager::class)->getRepository(Article::class);
     }
 
     public function index(Request $request, Response $response, array $args = [])
     {
-        $articles = $this->model->read();
+        $articles = $this->er->findAll();
 
         return $this->view->render($response, 'article/index.php', [
             'title' => 'Articles',
@@ -31,10 +35,10 @@ class ArticleController extends BaseController
     public function view(Request $request, Response $response)
     {
         $id = (int) $request->getAttribute('id');
-        $article = $this->model->read($id);
+        $article = $this->er->find($id);
 
         return $this->view->render($response, 'article/view.php', [
-            'title' => $article['title'],
+            'title' => $article->getTitle(),
             'article' => $article
         ]);
     }

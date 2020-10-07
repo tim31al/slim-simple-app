@@ -24,11 +24,11 @@ class Auth
     {
         $dbAdapter = new DbAdapter([
             'driver' => 'Pdo_Mysql',
-            'fixtures' => $container->get('fixtures')['name'],
-            'username' => $container->get('fixtures')['user'],
-            'password' => $container->get('fixtures')['password'],
-            'hostname' => $container->get('fixtures')['host'],
-            'port' => $container->get('fixtures')['port']
+            'database' => $container->get('database')['name'],
+            'username' => $container->get('database')['user'],
+            'password' => $container->get('database')['password'],
+            'hostname' => $container->get('database')['host'],
+            'port' => $container->get('database')['port']
         ]);
 
         $passwordValidation = function ($hash, $password) {
@@ -55,6 +55,11 @@ class Auth
             ->setCredential($password);
 
         return $this->auth->authenticate($this->authAdapter);
+    }
+
+    public function getAuthService(): ? AuthenticationService
+    {
+        return $this->auth;
     }
 
 

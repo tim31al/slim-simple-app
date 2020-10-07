@@ -7,6 +7,8 @@ namespace App\Middleware;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Laminas\Authentication\Storage\Session as SessionStorage;
+use Laminas\Session\SessionManager;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -34,6 +36,17 @@ class AuthenticationMiddleware
         $username = null;
         $password = null;
 
+
+        $storage = new SessionStorage('MyApp');
+        $data = $storage->read();
+
+        if (!empty($data)) {
+
+            $response = $handler->handle($request);
+            $str = implode(', ', $data);
+            $response->getBody()->write($str);
+            return $response;
+        }
 
         if (isset($_SESSION['user'])) {
             return $handler->handle($request);

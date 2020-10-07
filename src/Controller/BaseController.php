@@ -31,7 +31,7 @@ abstract class BaseController
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->view = new PhpRenderer($container->get('view_path'));
+        $this->view = new PhpRenderer($container->get('templates_path'));
         $this->view->setLayout('layout.php');
 
         $this->log = $container->get('log');
