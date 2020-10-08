@@ -12,18 +12,8 @@ class App
 {
     private SlimApp $app;
 
-    public function __construct($test = false)
+    public function __construct()
     {
-        if (!$test) {
-            session_start([
-                'cookie_lifetime' => 86400,
-            ]);
-        }
-
-//        session_destroy();
-//
-//        unset($_SERVER['PHP_AUTH_USER']);
-
         $rootPath = realpath(__DIR__ . '/..');
 
         $builder = new ContainerBuilder();

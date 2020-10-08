@@ -1,11 +1,9 @@
 <?php
 
+use App\Service\SessionStorage;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Cache\ApcuCache;
-use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
@@ -31,7 +29,7 @@ return [
     },
 
     // EntityManager
-    EntityManager::class => function (ContainerInterface $container) :EntityManager {
+    EntityManager::class => function (ContainerInterface $container): EntityManager {
 
         $config = Setup::createAnnotationMetadataConfiguration(
             $container->get('doctrine')['metadata_dirs'],
@@ -45,5 +43,10 @@ return [
         $config->setQueryCacheImpl($cache);
 
         return EntityManager::create($container->get('doctrine')['connection'], $config);
+    },
+
+    // Session Storage
+    SessionStorage::class => function (ContainerInterface $container) {
+        return new SessionStorage($container);
     }
 ];

@@ -144,11 +144,13 @@ class User
 
     /**
      * @ORM\PrePersist
+     *
      */
-    public function cryptPass()
+    public function cryptPass(): string
     {
         $pass = password_hash($this->password, PASSWORD_DEFAULT);
         $this->password = $pass ? $pass : $this->password;
+        return $pass;
     }
 
     /**
