@@ -109,10 +109,14 @@ class SessionStorage implements StorageInterface
     /**
      * Returns true if and only if storage is empty
      *
+     * @param null $key
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty($key = null)
     {
+        if (null !== $key)
+            return empty($_SESSION[$key]);
+
         return empty($_SESSION);
     }
 
@@ -123,10 +127,10 @@ class SessionStorage implements StorageInterface
      */
     public function read($key = null)
     {
-        if ($this->isEmpty())
+        if ($this->isEmpty($key))
             return null;
 
-        if ($key && $this->hasKey($key)) {
+        if (null !== $key && $this->hasKey($key)) {
             return $_SESSION[$key];
         }
 
@@ -152,13 +156,17 @@ class SessionStorage implements StorageInterface
 
     /**
      * Clears contents from storage
-     *
+     * @param null $key
      */
-    public function clear()
+    public function clear($key = null)
     {
-        if (!$this->isEmpty())
+        if (null !== $key) {
+            unset($_SESSION[$key]);
+            return;
+        } else if( !$this->isEmpty())
             foreach ($_SESSION as $key => $value)
                 unset($_SESSION[$key]);
+
     }
 
     /**

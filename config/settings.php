@@ -3,15 +3,6 @@
 $rootPath = realpath(__DIR__ . '/..');
 
 return [
-    'database' => [
-        'driver' => 'mysql',
-        'host' => 'localhost',
-        'port' => 3306,
-        'name' => 'slim',
-        'user' => 'alex',
-        'password' => 'r477ed'
-    ],
-
     'app_name' => 'MyApp',
 
     'base_path' => '',

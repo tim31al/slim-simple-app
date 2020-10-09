@@ -2,21 +2,12 @@
 /**
  * @var String $title
  * @var String $content
- * @var Array $scripts
+ * @var array $scripts
+ * @var AuthenticationService $auth
  */
 
-if (!isset($title))
-	$title = 'Test';
+use App\Service\AuthenticationService;
 
-$logInOut['href'] = $logInOut['title'] = '';
-
-if (isset($_SESSION['user'])) {
-	$logInOut['href'] = '/logout';
-	$logInOut['title'] = 'Logout';
-} else {
-	$logInOut['href'] = '/login';
-	$logInOut['title'] = 'LogIn';
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,9 +82,8 @@ if (isset($_SESSION['user'])) {
 		<li><a href="/server" title="Сервер">Server</a></li>
 		<li><a href="/users" title="User">Users</a></li>
 		<li><a href="/articles" title="Статьи">Articles</a></li>
-		<li><a href="/products" title="Doctrine">Products</a> </li>
 		<li><a href="/api/articles" title="Api">Api</a></li>
-		<li><a href="<?=$logInOut['href']?>"><?= $logInOut['title'] ?></a></li>
+		<li><a href="<?= $auth->hasIdentity() ? '/logout' : '/login'?>"><?= $auth->hasIdentity() ? 'Logout' : 'Login' ?></a></li>
 	</ul>
 </div>
 <div class="wrapper">

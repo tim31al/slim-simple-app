@@ -7,9 +7,10 @@ interface StorageInterface
     /**
      * Returns true if and only if storage is empty
      *
+     * @param null $key
      * @return bool
      */
-    public function isEmpty();
+    public function isEmpty($key = null);
 
     /**
      * Returns the contents of storage
@@ -27,7 +28,7 @@ interface StorageInterface
 
     /**
      * Clears contents from storage
-     *
+     * @param null $key
      */
-    public function clear();
+    public function clear($key = null);
 }

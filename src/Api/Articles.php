@@ -31,6 +31,13 @@ class Articles
 
     // curl -X GET http://slim/api/articles
     // curl -X GET http://slim/api/articles/1
+    /**
+     * Show one|all article(s)
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function read(Request $request, Response $response)
     {
         $id = (int)$request->getAttribute('id');
@@ -48,6 +55,14 @@ class Articles
     }
 
     // curl -X POST http://slim/api/article -H "Content-type: application/json" -d '{"title":"Новая статья", "content":"Содержимое новой статьи"}'
+
+    /**
+     * Create article
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function create(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
@@ -72,6 +87,13 @@ class Articles
     }
 
     //curl -X PUT http://slim/api/article/33 -H "Content-type: application/json" -d '{"title":"Обновленная", "content":"Обновленная статья"}'
+    /**
+     * Update article
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function update(Request $request, Response $response)
     {
         $id = (int)$request->getAttribute('id');
@@ -80,10 +102,8 @@ class Articles
         $article = ($this->em->getRepository(Article::class))
             ->find($id);
 
-
         $article->setTitle($data['title']);
         $article->setContent($data['content']);
-
 
         try {
             $this->em->persist($article);
@@ -98,6 +118,13 @@ class Articles
     }
 
     // curl -X DELETE http://slim/api/article/26
+    /**
+     * Delete articles
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function delete(Request $request, Response $response)
     {
         $id = (int)$request->getAttribute('id');
@@ -114,7 +141,6 @@ class Articles
         } catch (ORMException $e) {
             $this->status = self::STATUS_ERROR;
         }
-
 
         $response->getBody()->write(json_encode([self::MESSAGE => $this->status]));
         return $response->withHeader('Content-Type', 'application/json');

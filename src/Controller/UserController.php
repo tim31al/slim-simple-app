@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
-class UserController extends BaseController
+class UserController extends AbstractController
 {
     private EntityManager $em;
     private EntityRepository $repo;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Service\AuthenticationService;
 use App\Service\SessionStorage;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\FilesystemCache;
@@ -7,18 +8,12 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
-use App\Database\DatabaseConnection;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 return [
-    // DatabaseConnection
-    'db' => function (ContainerInterface $container) {
-        return new DatabaseConnection($container->get('database'));
-    },
-
     // monolog logger
-    'log' => function (ContainerInterface $container) {
+    Logger::class => function (ContainerInterface $container) {
         $logFile = $container->get('log_path') . '/app.log';
         if (!file_exists($logFile))
             touch($logFile);
@@ -48,5 +43,10 @@ return [
     // Session Storage
     SessionStorage::class => function (ContainerInterface $container) {
         return new SessionStorage($container);
+    },
+
+    // Authentication
+    AuthenticationService::class => function (ContainerInterface $container) {
+        return new AuthenticationService($container);
     }
 ];

@@ -1,8 +1,7 @@
 <?php
 
-//use App\Middleware\AuthenticationMiddleware;
-use App\Security\Auth;
-use App\Security\BasicAuth;
+use App\Middleware\BasicAuthenticationMiddleware;
+use App\Service\AuthenticationService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -10,39 +9,30 @@ use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
 return function (App $app) {
-    $app->get('/', 'App\Controller\HomeController:index');
+    $app->get('/', 'App\Controller\SiteController:index');
 
     // login
-    $app->map(['GET', 'POST'], '/login', 'App\Controller\DefaultController:login');
+    $app->map(['GET', 'POST'], '/login', 'App\Controller\SiteController:login');
 
-    $app->get('/logout', function (Response $response, $app) {
+    $app->get('/logout', function (Request $request, Response $response) use ($app) {
 
-        $referer = '/';
+        $auth = $app->getContainer()->get(AuthenticationService::class);
+        $auth->clearIdentity();
 
-        if (isset($_SESSION['referer'])) {
-            $referer = $_SESSION['referer'];
-            unset($_SESSION['referer']);
-        } elseif (isset($_SERVER['HTTP_REFERER'])) {
-            $referer = $_SERVER['HTTP_REFERER'];
-        }
-
-        $auth = new Auth($app->getContainer());
-        $auth->getAuthService()->clearIdentity();
-
+        $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
         return $response
             ->withHeader('Location', $referer)
             ->withStatus(302);
     });
 
 
-    $app->get('/server', 'App\Controller\HomeController:server')//        ->add(new AuthenticationMiddleware($app->getContainer()))
+    $app->get('/server', 'App\Controller\SiteController:server')
+                ->add(new BasicAuthenticationMiddleware($app->getContainer()))
     ;
 
     $app->get('/articles', 'App\Controller\ArticleController:index');
     $app->get('/article/{id:\d+}', 'App\Controller\ArticleController:view');
 
-    $app->get('/products', 'App\Controller\ProductController:index');
-    $app->get('/product/{id:[0-9]+}', 'App\Controller\ProductController:view');
 
     $app->get('/users', 'App\Controller\UserController:index');
     $app->get('/user/{id:[0-9]+}', 'App\Controller\UserController:view');
@@ -68,7 +58,7 @@ return function (App $app) {
         ->add(function (Request $request, RequestHandlerInterface $handler) use ($app) {
 
 
-            $auth = new BasicAuth($app->getContainer());
+            $auth = new BasicAuthenticationService($app->getContainer());
             $isAuth = $auth->authenticate();
 
             if (!$isAuth) {
@@ -87,32 +77,7 @@ return function (App $app) {
         });
 
 
-    $app->get('/test-session', function (Request $request, Response $response) use ($app) {
 
-        $arr = ['name' => 'alex', 'role' => 'admin'];
-
-
-        $session = $app->getContainer()->get(\App\Service\SessionStorage::class);
-        $session->write('new', 'new');
-        $sessionId = $session->getId();
-        $identity = $session->hasKey('identity') ? $session->read('identity') : '';
-        $counter = $session->hasKey('counter') ? $session->read('counter') : 0;
-
-        $global = "_SESSION\n";
-        foreach($_SESSION as $k => $v)
-            $global .= $k .': '.$v."\n";
-
-        $body = sprintf(
-            '<html><body><h3>Session ID: %s</h3><h3>Identity: %s</h3><h3>Counter: %d</h3><hr></h4><pre>%s</pre></body></html>',
-            $sessionId, implode(':', $identity), $counter, $global);
-
-
-        $session->write('identity', $arr);
-        $session->write('counter', ++$counter);
-
-        $response->getBody()->write($body);
-        return $response;
-    });
 
 
     // включить кеширование, если debug not false
