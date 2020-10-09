@@ -2,3 +2,4 @@
 /var/
 /.idea/
 /.phpunit.result.cache
+/node_modules/
