@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Psr7\Response;
 use function count;
 
-class BasicAuthenticationMiddleware
+class BasicAuthMiddleware
 {
 
     private AuthenticationService $authService;

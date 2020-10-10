@@ -17,6 +17,7 @@ class ArticleController extends AbstractController
         $er = $this->container->get(EntityManager::class)->getRepository(Article::class);
         $articles = $er->findAll();
 
+
         return $this->render($response, 'article/index.php', [
             'title' => 'Articles',
             'articles' => $articles,
@@ -24,7 +25,7 @@ class ArticleController extends AbstractController
             ]);
     }
 
-    public function view(Request $request, Response $response)
+    public function show(Request $request, Response $response)
     {
         $id = (int) $request->getAttribute('id');
 
@@ -32,8 +33,7 @@ class ArticleController extends AbstractController
         $article = $er->find($id);
 
         return $this->render($response, 'article/view.php', [
-            'title' => $article->getTitle(),
-            'article' => $article
+            'article' => $article, 'title' => $article->getTitle()
         ]);
     }
 

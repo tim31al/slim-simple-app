@@ -15,8 +15,10 @@ abstract class AbstractController
      */
     protected PhpRenderer $view;
 
+    /**
+     * @var ContainerInterface
+     */
     protected ContainerInterface $container;
-
 
     /**
      * BaseController constructor.
@@ -24,17 +26,18 @@ abstract class AbstractController
      */
     public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
+
         $this->view = new PhpRenderer($container->get('templates_path'));
         $this->view->setLayout('layout.php');
         $this->view->addAttribute('auth', $container->get(AuthenticationService::class));
+        $this->view->addAttribute('style', '/css/bootstrap.css');
         $this->view->addAttribute('title', $container->get('app_name'));
-        $this->container = $container;
-
     }
 
     protected function render(Response $response, string $template, array $params = []): Response
     {
-        return $this->view->render($response, $template, $params,);
+        return $this->view->render($response, $template, $params);
     }
 
 }

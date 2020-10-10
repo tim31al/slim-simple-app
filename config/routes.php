@@ -1,6 +1,6 @@
 <?php
 
-use App\Middleware\BasicAuthenticationMiddleware;
+use App\Middleware\AuthMiddleware;
 use App\Service\AuthenticationService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -19,23 +19,22 @@ return function (App $app) {
         $auth = $app->getContainer()->get(AuthenticationService::class);
         $auth->clearIdentity();
 
-        $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
         return $response
-            ->withHeader('Location', $referer)
+            ->withHeader('Location', '/')
             ->withStatus(302);
     });
 
 
-    $app->get('/server', 'App\Controller\SiteController:server')
-                ->add(new BasicAuthenticationMiddleware($app->getContainer()))
+    $app->get('/server', 'App\Controller\SiteController:server')//                ->add(new BasicAuthMiddleware($app->getContainer()))
     ;
 
     $app->get('/articles', 'App\Controller\ArticleController:index');
-    $app->get('/article/{id:\d+}', 'App\Controller\ArticleController:view');
+    $app->get('/article/{id:\d+}', 'App\Controller\ArticleController:show');
 
-
-    $app->get('/users', 'App\Controller\UserController:index');
-    $app->get('/user/{id:[0-9]+}', 'App\Controller\UserController:view');
+    $app->group('/user', function (RouteCollectorProxy $group) {
+        $group->get('s', 'App\Controller\UserController:index');
+        $group->get('/{id:[0-9]+}', 'App\Controller\UserController:view');
+    })->add(new AuthMiddleware($app->getContainer(), 'editor'));
 
     // Api Article routes
     $app->group('/api', function (RouteCollectorProxy $group) {
@@ -57,8 +56,7 @@ return function (App $app) {
     })
         ->add(function (Request $request, RequestHandlerInterface $handler) use ($app) {
 
-
-            $auth = new BasicAuthenticationService($app->getContainer());
+            $auth = $app->getContainer()->get(AuthenticationService::class);
             $isAuth = $auth->authenticate();
 
             if (!$isAuth) {
@@ -75,9 +73,6 @@ return function (App $app) {
 
 
         });
-
-
-
 
 
     // включить кеширование, если debug not false

@@ -23,6 +23,10 @@ class SiteController extends AbstractController
 
     public function login(Request $request, Response $response)
     {
+        $result = '';
+        $data['username'] = $data['password'] = '';
+
+        // Сохранить ссылку для перехода на вызвавшую страницу
         if ($request->getMethod() == 'GET') {
             $session = $this->container->get(SessionStorage::class);
             $session->write('referer', $_SERVER['HTTP_REFERER']);
@@ -31,6 +35,7 @@ class SiteController extends AbstractController
         if ($request->getMethod() == 'POST') {
             $data = $request->getParsedBody();
 
+            // аутентификация
             $auth = $this->container->get(AuthenticationService::class);
             $auth->setUsername($data['username']);
             $auth->setPassword($data['password']);
@@ -44,15 +49,11 @@ class SiteController extends AbstractController
                 return $response
                     ->withHeader('Location', $referer)
                     ->withStatus(302);
-            } else {
-                $response = new \Slim\Psr7\Response();
-                $str = implode(', ', $result->getMessages());
-                $response->getBody()->write('<html lang="en"><body><h1>Error: '.$result->getCode().'</h1><p>'.$str. '</p></body></html>');
-                return $response;
             }
         }
-        return $this->render($response, 'site/login.php');
+
+        return $this->render($response, 'site/login.php',
+            ['result' => $result, 'data' => $data]);
 
     }
-
 }

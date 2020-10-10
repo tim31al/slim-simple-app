@@ -30,5 +30,5 @@ interface StorageInterface
      * Clears contents from storage
      * @param null $key
      */
-    public function clear($key = null);
+    public function clear($key);
 }

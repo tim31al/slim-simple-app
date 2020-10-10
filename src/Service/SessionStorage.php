@@ -156,17 +156,11 @@ class SessionStorage implements StorageInterface
 
     /**
      * Clears contents from storage
-     * @param null $key
+     * @param $key
      */
-    public function clear($key = null)
+    public function clear($key)
     {
-        if (null !== $key) {
-            unset($_SESSION[$key]);
-            return;
-        } else if( !$this->isEmpty())
-            foreach ($_SESSION as $key => $value)
-                unset($_SESSION[$key]);
-
+        unset($_SESSION[$key]);
     }
 
     /**

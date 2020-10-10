@@ -1,9 +1,10 @@
 <?php
 /**
- * @var String $title
- * @var String $content
+ * @var string $title
+ * @var string $content
  * @var array $scripts
  * @var AuthenticationService $auth
+ * @var string $style
  */
 
 use App\Service\AuthenticationService;
@@ -14,79 +15,37 @@ use App\Service\AuthenticationService;
 <head>
 	<meta charset="UTF-8">
 	<title><?= $title ?></title>
-	<style>
-        .wrapper {
-            padding: 1rem 2rem;
-        }
-
-        #articles {
-            display: inline-block !important;
-            min-width: 20%;
-        }
-
-        #articles li {
-            cursor: pointer;
-            padding: .5rem 1rem;
-            border: 1px solid lightskyblue;
-            list-style-type: none;
-        }
-
-        .content {
-            padding: 2rem 0;
-            font-style: italic;
-            cursor: pointer;
-        }
-
-        .nav {
-            margin: 0;
-            padding: .5rem 2rem;
-        }
-
-        .nav li {
-            display: inline-block;
-            text-decoration: none;
-            padding: 3px 8px;
-            margin: 5px 0 5px 10px;
-            border: 2px solid dimgrey;
-            box-shadow: gray;
-            border-radius: 4px;
-            color: dimgrey;
-        }
-
-        .nav li:hover {
-            cursor: pointer;
-            background-color: dimgrey;
-        }
-
-        .nav li:hover a {
-            color: white;
-        }
-
-        .nav li a {
-            text-decoration: none;
-            color: dimgrey;
-        }
-
-        .active {
-            color: white;
-            background-color: dimgrey;
-        }
-
-
-	</style>
+	<link type="text/css" href="<?= $style ?>" rel="stylesheet">
 </head>
 <body>
-<div class="nav">
-	<ul>
-		<li><a href="/" title="Главная">Main</a></li>
-		<li><a href="/server" title="Сервер">Server</a></li>
-		<li><a href="/users" title="User">Users</a></li>
-		<li><a href="/articles" title="Статьи">Articles</a></li>
-		<li><a href="/api/articles" title="Api">Api</a></li>
-		<li><a href="<?= $auth->hasIdentity() ? '/logout' : '/login'?>"><?= $auth->hasIdentity() ? 'Logout' : 'Login' ?></a></li>
-	</ul>
-</div>
-<div class="wrapper">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a class="navbar-brand" href="/">MyApp</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item active">
+				<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/server">Server</a>
+			</li>
+			<?php if ($auth->hasIdentity()): ?>
+			<li class="nav-item">
+				<a class="nav-link" href="/users">Users</a>
+			</li>
+			<?php endif; ?>
+			<li class="nav-item">
+				<a class="nav-link" href="/articles">Articles</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<?= $auth->hasIdentity() ? '/logout' : '/login'?>"><?= $auth->hasIdentity() ? 'Logout' : 'Login' ?></a>
+			</li>
+		</ul>
+	</div>
+</nav>
+<div class="container my-4">
     <?= $content ?>
 </div>
 

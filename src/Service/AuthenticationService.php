@@ -40,8 +40,8 @@ class AuthenticationService
      */
     public function authenticate(): Result
     {
-        if (null === $this->username || null === $this->password )
-            throw New InvalidArgumentException('username/password must be set to calling authenticate()');
+        if (null === $this->username || null === $this->password)
+            throw new InvalidArgumentException('username/password must be set to calling authenticate()');
 
 
         $user = $this->er->findOneBy(['username' => $this->username]);
@@ -50,13 +50,13 @@ class AuthenticationService
             $result = new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 $this->username,
-                array('Username Not Found')
+                array('Username Not Found.')
             );
         } else if (!password_verify($this->password, $user->getPassword())) {
             $result = new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 $this->username,
-                array('Invalid password'));
+                array('Invalid password.'));
         } else {
             $result = new Result(
                 Result::SUCCESS,
@@ -77,6 +77,36 @@ class AuthenticationService
         }
 
         return $result;
+    }
+
+    public function authorisation($role = 'user'): bool
+    {
+        if (!$this->hasIdentity())
+            return false;
+
+        if (! array_key_exists($role, User::ROLES))
+            throw new InvalidArgumentException('Role not found in ' . User::class . '.');
+
+        $statement = false;
+        $currentRole = $this->getRole();
+
+        switch ($role) {
+            case 'user':
+                $statement = true;
+                break;
+            case 'editor':
+                if ($currentRole === User::ROLES['editor'] ||
+                $currentRole === User::ROLES['admin'])
+                    $statement = true;
+                break;
+
+            case 'admin':
+                if ($currentRole === User::ROLES['admin'])
+                    $statement = true;
+                break;
+        }
+
+        return $statement;
     }
 
     /**
@@ -120,7 +150,7 @@ class AuthenticationService
      */
     public function getRole()
     {
-        if($this->hasIdentity()) {
+        if ($this->hasIdentity()) {
             return $this->storage->read(self::STORAGE_KEY)['role'];
         }
         return null;
@@ -137,9 +167,9 @@ class AuthenticationService
     /**
      * @return bool
      */
-    public function isCreator()
+    public function isEditor()
     {
-        return User::ROLES['creator'] === $this->getRole();
+        return User::ROLES['editor'] === $this->getRole();
     }
 
     /**
@@ -148,32 +178,6 @@ class AuthenticationService
     public function isAdmin()
     {
         return User::ROLES['admin'] === $this->getRole();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function authorisation()
-    {
-
     }
 
     /**
