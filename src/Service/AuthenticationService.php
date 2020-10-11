@@ -79,6 +79,10 @@ class AuthenticationService
         return $result;
     }
 
+    /**
+     * @param string $role
+     * @return bool
+     */
     public function authorisation($role = 'user'): bool
     {
         if (!$this->hasIdentity())

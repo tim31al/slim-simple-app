@@ -14,21 +14,27 @@ class BasicAuthMiddleware
 {
 
     private AuthenticationService $authService;
+    private string $appName;
+    private string $role;
 
     /**
      * AuthenticationMiddleware constructor.
      * @param ContainerInterface $container
+     * @param string|null $role
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, $role = null)
     {
         $this->authService = $container->get(AuthenticationService::class);
+        $this->appName = $container->get('app_name');
+        if (null !== $role)
+            $this->role = $role;
     }
 
 
     public function __invoke(Request $request, RequestHandler $handler)
     {
-        if ($this->authService->hasIdentity())
-            return $handler->handle($request);
+//        if ($this->authService->hasIdentity())
+//            return $handler->handle($request);
 
         $username = $password = '';
 
@@ -45,23 +51,26 @@ class BasicAuthMiddleware
         } else {
             return (new Response())
                 ->withHeader('WWW-Authenticate',
-                    'Basic realm="Access to site", charset="UTF-8');
+                    sprintf('Basic realm="%s", charset="UTF-8', $this->appName));
         }
 
         $this->authService->setUsername($username);
         $this->authService->setPassword($password);
 
         $result = $this->authService->authenticate();
+        $isAuthorised = true;
+        if (null !== $this->role) {
+            $isAuthorised = $this->authService->authorisation($this->role);
+        }
 
-        if($result->isValid())
+
+        if ($result->isValid() && $isAuthorised)
             return $handler->handle($request);
         else {
             return (new Response())
                 ->withHeader('WWW-Authenticate',
-                    'Basic realm="Access to site", charset="UTF-8');
+                    sprintf('Basic realm="%s", charset="UTF-8', $this->appName));
         }
-
-
 
 
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Middleware\AuthMiddleware;
+use App\Middleware\BasicAuthMiddleware;
 use App\Service\AuthenticationService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -43,7 +44,9 @@ return function (App $app) {
         $group->post('/article', 'App\Api\Articles:create');
         $group->put('/article/{id:\d+}', 'App\Api\Articles:update');
         $group->delete('/article/{id:\d+}', 'App\Api\Articles:delete');
-    });
+    })
+        ->add(new BasicAuthMiddleware($app->getContainer(), 'editor'))
+    ;
 
     $app->get('/test', function (Request $request, Response $response, array $args) {
 
