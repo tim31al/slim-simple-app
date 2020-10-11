@@ -26,10 +26,7 @@ class ArticlesTest extends WebTestCase
 
     public function testArticles()
     {
-        list($body, $info) = $this->request(
-            '/api/articles', 'GET',null,
-            array($this->authHeader)
-        );
+        list($body, $info) = $this->request('/api/articles');
 
         $this->assertResponseIsOk($info);
         $this->assertEquals('application/json', $info['content_type']);
@@ -41,10 +38,7 @@ class ArticlesTest extends WebTestCase
         $id = 21;
         $title = 'Article 1';
 
-        list($body, $info) = $this->request(
-            "/api/article/$id",
-            'GET', null,
-            array($this->authHeader));
+        list($body, $info) = $this->request("/api/article/$id");
 
         $this->assertResponseIsOk($info);
         $this->assertEquals('application/json', $info['content_type']);
@@ -73,7 +67,7 @@ class ArticlesTest extends WebTestCase
 
         // update article
         list($response, $info) = $this->request(
-            '/api/article/'.$articleId, 'PUT',
+            '/api/article/' . $articleId, 'PUT',
             json_encode(['title' => 'New title']),
             array($this->contentType, $this->authHeader)
         );
@@ -83,7 +77,7 @@ class ArticlesTest extends WebTestCase
 
         // delete article
         list($response, $info) = $this->request(
-            '/api/article/'.$articleId, 'DELETE', null,
+            '/api/article/' . $articleId, 'DELETE', null,
             array($this->authHeader)
         );
         $this->assertResponseIsOk($info);

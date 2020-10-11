@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 $startTime = microtime(true);
 
-require_once __DIR__ . '/../../config/cli-bootstrap.php';
+require_once __DIR__ . '/../../config/bootstrap.php';
 
 /** @var ContainerInterface $container */
 $em = $container->get(EntityManager::class);

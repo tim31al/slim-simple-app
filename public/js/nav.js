@@ -1,12 +1,9 @@
 'use strict'
 let path = window.location.pathname;
-let currentLink = Array.from(document.querySelectorAll('div.nav a'))
+let currentLink = Array.from(document.querySelectorAll('a.nav-link'))
     .find(item => {
-        console.log(path);
         if(path.includes('article')) {
             path = '/articles';
-        } else if(path.includes('product')) {
-            path = '/products';
         } else if(path.includes('user')) {
             path = '/users';
         }
@@ -14,10 +11,5 @@ let currentLink = Array.from(document.querySelectorAll('div.nav a'))
     });
 
 if(currentLink) {
-    setActive(currentLink);
-}
-
-function setActive(elem) {
-    elem.style.color = 'white';
-    elem.parentElement.style.backgroundColor = 'dimgrey';
+    currentLink.parentElement.classList.add('active');
 }

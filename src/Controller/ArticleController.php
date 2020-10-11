@@ -21,7 +21,7 @@ class ArticleController extends AbstractController
         return $this->render($response, 'article/index.php', [
             'title' => 'Articles',
             'articles' => $articles,
-            //'scripts' => ['articles']
+            'scripts' => ['articles']
             ]);
     }
 

@@ -7,8 +7,7 @@ return [
 
     'base_path' => '',
 
-    'debug' => true,
-    'applicationMode' => 'development', // production
+    'env' => 'dev', // change prod in production
 
     // Temporary directory
     'temporary_path' => $rootPath . '/var/tmp',

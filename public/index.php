@@ -9,16 +9,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $builder = new ContainerBuilder();
 // add setting
-$builder->addDefinitions(__DIR__ .  '/../config/settings.php');
+$builder->addDefinitions(__DIR__ . '/../config/settings.php');
 // add services
-$builder->addDefinitions(__DIR__. '/../config/services.php');
-$container = null;
-try {
-    $container = $builder->build();
-} catch (Exception $e) {
-    print_r($e->getTrace());
-    exit($e->getCode());
-}
+$builder->addDefinitions(__DIR__ . '/../config/services.php');
+
+$container = $builder->build();
 
 $app = AppFactory::createFromContainer($container);
 
@@ -30,10 +25,10 @@ $app->addRoutingMiddleware();
 $app->add(new MethodOverrideMiddleware());
 
 // Add display Error handler
-$app->addErrorMiddleware(true, true, true);
+if ($container->get('env') === 'dev')
+    $app->addErrorMiddleware(true, true, true);
 
-// register routes
-$routes = require __DIR__ . '/../config/routes.php';
-$routes($app);
+// routes
+(require __DIR__ . '/../config/routes.php')($app);
 
 $app->run();

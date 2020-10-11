@@ -8,9 +8,9 @@
 use App\Entity\Article;
 ?>
 <h1 class="h2">Sample articles</h1>
-<div class="list-group list-group-flush">
+<div id="articles" class="list-group list-group-flush">
 	<?php foreach ($articles as $article): ?>
-	<a href="/article/<?= $article->getId() ?>" class="list-group-item list-group-item-action">
+	<a href="/article/<?= $article->getId() ?>" data-id="<?= $article->getId() ?>" class="list-group-item list-group-item-action">
 		<?= $article->getTitle() ?>
 	</a>
 	<?php endforeach; ?>
