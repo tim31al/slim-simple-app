@@ -28,12 +28,12 @@ return [
         'proxies_dir' => $rootPath . '/src/Proxies',
         'metadata_dirs' => [$rootPath . '/src/Entity'],
         'connection' => [
-            'driver' => 'pdo_mysql',
-            'host' => 'localhost',
-            'port' => 3306,
-            'dbname' => 'slim',
-            'user' => 'alex',
-            'password' => 'r477ed'
+            'driver' => '',
+            'host' => '',
+            'port' => '',
+            'dbname' => '',
+            'user' => '',
+            'password' => ''
         ]
     ]
 

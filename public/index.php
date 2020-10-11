@@ -9,7 +9,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $builder = new ContainerBuilder();
 // add setting
-$builder->addDefinitions(__DIR__ . '/../config/settings.php');
+
+$builder->addDefinitions(
+    __DIR__ . '/../config/settings.php',
+    __DIR__ . '/../config/settings.local.php'
+);
 // add services
 $builder->addDefinitions(__DIR__ . '/../config/services.php');
 

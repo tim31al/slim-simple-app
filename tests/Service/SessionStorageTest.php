@@ -5,19 +5,26 @@ namespace Test\Service;
 use App\Service\SessionStorage;
 use DI\ContainerBuilder;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 
 
 class SessionStorageTest extends TestCase
 {
     private SessionStorage $storage;
+    private ContainerInterface $c;
 
     public function setUp(): void
     {
         $builder = new ContainerBuilder();
-        $builder->addDefinitions(__DIR__.'/settings.php');
-        $builder->addDefinitions(__DIR__ . '/services.php');
+
+        $builder->addDefinitions(
+            __DIR__.'/../../config/settings.php',
+            __DIR__.'/../../config/settings.local.php',
+        );
+        $builder->addDefinitions(__DIR__ . '/../../config/services.php');
         $container = $builder->build();
 
+        $this->c = $container;
         $this->storage = new SessionStorage($container);
     }
 
@@ -51,7 +58,6 @@ class SessionStorageTest extends TestCase
         // clear data
         $this->storage->clear($key);
         $this->assertTrue($this->storage->isEmpty($key));
-
     }
 
     public function tearDown(): void
