@@ -8,22 +8,32 @@ trait WebTestTrait
 {
     protected string $baseUrl = 'http://slim';
 
-    private function loadEndpoint($url) {
-        $url = $this->baseUrl . $url;
+    private function request($uri, $method = 'GET', $data = null, array $headers = null)
+    {
+        $url = $this->baseUrl . $uri;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        if (null !== $data)
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        if (null !== $headers)
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
         $output = curl_exec($ch);
         $info = curl_getinfo($ch);
         curl_close($ch);
 
-        return array($output,$info);
+        return array($output, $info);
     }
 
     //this allows you to write messages in the test output
-    private function printToConsole($statement) {
-        fwrite(STDOUT, $statement."\n");
+    private function printToConsole($statement)
+    {
+        fwrite(STDOUT, $statement . "\n");
     }
 
 

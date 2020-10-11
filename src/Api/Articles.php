@@ -67,7 +67,6 @@ class Articles
     {
         $data = $request->getParsedBody();
 
-
         $article = new Article();
         $article->setTitle($data['title']);
         $article->setContent($data['content']);
@@ -81,12 +80,15 @@ class Articles
             $this->status = self::STATUS_ERROR;
         }
 
-        $response->getBody()->write(json_encode([self::MESSAGE => $this->status]));
+        $response->getBody()->write(json_encode([
+            self::MESSAGE => $this->status, 'id' => $article->getId()
+        ]));
 
         return $response->withHeader('Content-Type', 'application/json');
     }
 
     //curl -X PUT http://slim/api/article/33 -H "Content-type: application/json" -d '{"title":"Обновленная", "content":"Обновленная статья"}'
+
     /**
      * Update article
      *
@@ -103,7 +105,9 @@ class Articles
             ->find($id);
 
         $article->setTitle($data['title']);
-        $article->setContent($data['content']);
+
+        if (null !== $data['content'])
+            $article->setContent($data['content']);
 
         try {
             $this->em->persist($article);
@@ -118,6 +122,7 @@ class Articles
     }
 
     // curl -X DELETE http://slim/api/article/26
+
     /**
      * Delete articles
      *

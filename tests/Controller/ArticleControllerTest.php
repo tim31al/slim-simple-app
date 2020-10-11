@@ -15,7 +15,7 @@ class ArticleControllerTest extends WebTestCase
     public function testIndex()
     {
 
-        list($body, $info) = $this->loadEndpoint('/articles');
+        list($body, $info) = $this->request('/articles');
 
         // test response
         $this->assertResponseIsOk($info);
@@ -25,16 +25,12 @@ class ArticleControllerTest extends WebTestCase
 
     }
 
-    public function testView()
+    public function testShow()
     {
-        list($body, $info) = $this->loadEndpoint('/article/21');
+        list($body, $info) = $this->request('/article/21');
 
-        // test response
         $this->assertResponseIsOk($info);
-
-        // test index page
         $this->assertStringContainsString('<h1 class="h2">Article 1</h1>', $body);
-
     }
 
 }
