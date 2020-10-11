@@ -1,5 +1,6 @@
 <?php
 
+use App\Api\Articles;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\BasicAuthMiddleware;
 use App\Service\AuthenticationService;

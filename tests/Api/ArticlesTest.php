@@ -11,7 +11,7 @@ class ArticlesTest extends WebTestCase
     use WebTestTrait;
 
     private string $contentType;
-    private string $auth;
+    private string $authHeader;
 
 
     public function setUp(): void
@@ -20,24 +20,15 @@ class ArticlesTest extends WebTestCase
         $username = 'editor';
         $password = 'editor';
         $hash = base64_encode(sprintf('%s:%s', $username, $password));
-        $this->auth = sprintf('Authorization: Basic %s', $hash);
-
+        $this->authHeader = sprintf('Authorization: Basic %s', $hash);
     }
 
-//    public function testSomeData()
-//    {
-//        echo "\n";
-//        echo $this->auth."\n";
-//        echo $this->contentType;
-//
-//        $this->assertTrue(true);
-//    }
 
     public function testArticles()
     {
         list($body, $info) = $this->request(
             '/api/articles', 'GET',null,
-            array($this->auth)
+            array($this->authHeader)
         );
 
         $this->assertResponseIsOk($info);
@@ -45,60 +36,59 @@ class ArticlesTest extends WebTestCase
     }
 
 
-//    public function testArticle()
-//    {
-//        $id = 21;
-//        $title = 'Article 1';
-//
-//        list($body, $info) = $this->request("/api/article/$id");
-//        $this->assertEquals('application/json', $info['content_type']);
-//        $this->assertStringContainsString($title, $body);
-//    }
+    public function testArticle()
+    {
+        $id = 21;
+        $title = 'Article 1';
 
-//    public function testCrud()
-//    {
-//        $contentTypeHeader = 'Content-Type: application/json';
-////        $authHeader = '"Authorization: Basic ZWRpdG9yOmVkaXRvcg=="';
-//        $username = 'editor';
-//        $password = 'editor';
-//        $hash = base64_encode(sprintf('%s:%s', $username, $password));
-//        $authHeader = sprintf('"Authorisation: Basic %s"', $hash);
-//        $data = ['title' => 'Test Art', 'content' => 'Test Art content'];
-//
-//
-//        // create article
-//        list($response, $info) = $this->request(
-//            '/api/article',
-//            'POST',
-//            json_encode($data),
-//            array($contentTypeHeader, $authHeader)
-//        );
-//        $this->assertResponseIsOk($info);
-//
-//        // stdClasss Object (Result, id)
-//        $response = json_decode($response);
-//        $this->assertSame('OK', $response->Result);
-//        $this->assertIsInt($response->id);
-//        // save article id
-//        $articleId = $response->id;
-//
-//        // update article
-//        list($response, $info) = $this->request(
-//            '/api/article/'.$articleId, 'PUT',
-//            json_encode(['title' => 'New title']),
-//            array($contentTypeHeader)
-//        );
-//        $response = json_decode($response);
-//        $this->assertResponseIsOk($info);
-//        $this->assertSame('OK', $response->Result);
-//
-//        // delete article
-//        list($response, $info) = $this->request(
-//            '/api/article/'.$articleId, 'DELETE'
-//        );
-//        $this->assertResponseIsOk($info);
-//
-//    }
+        list($body, $info) = $this->request(
+            "/api/article/$id",
+            'GET', null,
+            array($this->authHeader));
+
+        $this->assertResponseIsOk($info);
+        $this->assertEquals('application/json', $info['content_type']);
+        $this->assertStringContainsString($title, $body);
+    }
+
+    public function testCrud()
+    {
+        $data = ['title' => 'Test Art', 'content' => 'Test Art content'];
+
+        // create article
+        list($response, $info) = $this->request(
+            '/api/article',
+            'POST',
+            json_encode($data),
+            array($this->contentType, $this->authHeader)
+        );
+        $this->assertResponseIsOk($info);
+
+        // stdClasss Object (Result, id)
+        $response = json_decode($response, true);
+        $this->assertSame('OK', $response['status']);
+        $this->assertIsInt($response['id']);
+        // save article id
+        $articleId = $response['id'];
+
+        // update article
+        list($response, $info) = $this->request(
+            '/api/article/'.$articleId, 'PUT',
+            json_encode(['title' => 'New title']),
+            array($this->contentType, $this->authHeader)
+        );
+        $response = json_decode($response, true);
+        $this->assertResponseIsOk($info);
+        $this->assertSame('OK', $response['status']);
+
+        // delete article
+        list($response, $info) = $this->request(
+            '/api/article/'.$articleId, 'DELETE', null,
+            array($this->authHeader)
+        );
+        $this->assertResponseIsOk($info);
+
+    }
 
     /*
      curl -X GET http://slim/api/articles

@@ -11,9 +11,10 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Container\ContainerInterface;
 
+
 class Articles
 {
-    private const MESSAGE = 'Result';
+    private const MESSAGE = 'status';
     private const STATUS_ERROR = 'ERROR';
     private const STATUS_OK = 'OK';
     private EntityManager $em;
@@ -28,6 +29,7 @@ class Articles
         $this->em = $container->get(EntityManager::class);
         $this->status = self::STATUS_OK;
     }
+
 
     // curl -X GET http://slim/api/articles
     // curl -X GET http://slim/api/articles/1
