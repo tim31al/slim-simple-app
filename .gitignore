@@ -1,5 +1,7 @@
 /vendor/
-/var/
+/var/log/*
+/var/doctrine/*
+/var/cache/*
 /.idea/
 /.phpunit.result.cache
 /node_modules/

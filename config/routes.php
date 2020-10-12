@@ -25,7 +25,7 @@ return function (App $app) {
         });
 
         $group->get('articles', 'App\Controller\ArticleController:index');
-        $group->get('article/{id:\d+}', 'App\Controller\ArticleController:show');
+        $group->get('article/{id:[0-9]+}', 'App\Controller\ArticleController:show');
     });
 
     $app->get('/server', 'App\Controller\SiteController:server');

@@ -1,6 +1,9 @@
 <?php
 
+use App\Middleware\ErrorMiddleware;
 use DI\ContainerBuilder;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Middleware\MethodOverrideMiddleware;
 
@@ -30,7 +33,10 @@ $app->add(new MethodOverrideMiddleware());
 
 // Add display Error handler
 if ($container->get('env') === 'dev')
-    $app->addErrorMiddleware(true, true, true);
+    // slim default error middleware
+    $app->addErrorMiddleware(true, false, false);
+else
+    $app->add(new ErrorMiddleware($app->getContainer()));
 
 // routes
 (require __DIR__ . '/../config/routes.php')($app);

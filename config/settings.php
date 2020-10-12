@@ -7,7 +7,7 @@ return [
 
     'base_path' => '',
 
-    'env' => 'dev', // change prod in production
+    'env' => 'dev', // change "prod" in production
 
     // Temporary directory
     'temporary_path' => $rootPath . '/var/tmp',
@@ -20,6 +20,15 @@ return [
 
     // Log path
     'log_path' => $rootPath . '/var/log',
+
+    // session
+    'session' => [
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => '',
+        'security' => false,
+        'http_only' => true,
+    ],
 
     // doctrine
     'doctrine' => [

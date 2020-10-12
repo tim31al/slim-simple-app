@@ -17,7 +17,6 @@ class ArticleController extends AbstractController
         $er = $this->container->get(EntityManager::class)->getRepository(Article::class);
         $articles = $er->findAll();
 
-
         return $this->render($response, 'article/index.php', [
             'title' => 'Articles',
             'articles' => $articles,
