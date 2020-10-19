@@ -5,5 +5,5 @@
 /.idea/
 /.phpunit.result.cache
 /node_modules/
-/scss/
 /config/settings.local.php
+/dist

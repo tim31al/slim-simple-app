@@ -31,7 +31,7 @@ abstract class AbstractController
         $this->view = new PhpRenderer($container->get('templates_path'));
         $this->view->setLayout('layout.php');
         $this->view->addAttribute('auth', $container->get(AuthenticationService::class));
-        $this->view->addAttribute('style', '/css/bootstrap.css');
+        $this->view->addAttribute('style', '/css/style.css');
         $this->view->addAttribute('title', $container->get('app_name'));
     }
 

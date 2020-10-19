@@ -15,8 +15,10 @@ use App\Service\AuthenticationService;
 <head>
 	<meta charset="UTF-8">
 	<title><?= $title ?></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1, IE=edge">
 	<link type="text/css" href="<?= $style ?>" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<!--	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">-->
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -48,8 +50,12 @@ use App\Service\AuthenticationService;
 		<ul class="nav navbar-nav ml-auto">
 			<li class="nav-item">
 				<a class="nav-link" href="<?= $auth->hasIdentity() ? '/logout' : '/login' ?>">
-					<span class="fas fa-sign-in-alt"></span>
-                    <?= $auth->hasIdentity() ? 'Logout' : 'Login' ?>
+					<?php if($auth->hasIdentity()): ?>
+					Logout
+					<?php else: ?>
+                    Login
+					<?php endif; ?>
+
 				</a>
 			</li>
 		</ul>
